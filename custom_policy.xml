@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policies>
+	<policy>
+		<sources>
+			<method enabled="true" id="ticketbook-cc" name="Ticketbook Credit Card" signature="com.acme.ticketbook.Person.getCreditCard()" tags="pci-data"/>
+			<method id="ice-rmi-1" enabled="true" type="message,rmi" name="RMI Inputs" inherit="subclasses-only" class="javax.rmi.CORBA.Stub" target="R" modifiers="public" scoped="false"/>
+		</sources>
+	</policy>
+</policies>
