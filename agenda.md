@@ -46,12 +46,12 @@ http://localhost:8001/
 - ツール連携  
 Eclipse, Jenkins, Maven
 - マージ機能、ライセンスの付け替え  
-```
-java -javaagent:contrast.jar ^
--Dcontrast.server.name=user05_svr ^
--Dcontrast.agent.java.standalone_app_name=PetClinic_user05-2 ^
--jar ./target/spring-petclinic-1.5.1.jar --server.port=8002
-```
+  ```
+  java -javaagent:contrast.jar ^
+  -Dcontrast.server.name=user05_svr ^
+  -Dcontrast.agent.java.standalone_app_name=PetClinic_user05-2 ^
+  -jar ./target/spring-petclinic-1.5.1.jar --server.port=8002
+  ```
 
 #### 6. QA
 あまった時間で質疑応答
