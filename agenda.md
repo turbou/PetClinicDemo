@@ -16,7 +16,7 @@ TeamServerからエージェントをDL
 `C:¥contrast_training¥PetClinicDemo`に
 - アプリ起動  
   ```
-  cd C:¥contrast_training¥PetClinicDemo
+  cd C:\contrast_training\PetClinicDemo
   java -javaagent:contrast.jar -Dcontrast.server.name=user05_svr -Dcontrast.agent.java.standalone_app_name=PetClinic_user05 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
 - PetClinicにアクセス  
