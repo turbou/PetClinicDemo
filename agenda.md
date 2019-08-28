@@ -7,6 +7,7 @@
 - アプリ（Jar）の確認  
 `C:¥contrast_training¥PetClinicDemo¥target¥spring-petclinic2-1.5.1.jar`
 - TeamServerへのログイン  
+https://xxxx.contrastsecurity.com/Contrast  
 userXX@ub-training.com/XXXXX
 
 #### 2. 対象アプリケーションのオンボード（15）
