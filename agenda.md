@@ -38,6 +38,7 @@ http://localhost:8001/
 - API
 - ツール連携  
 Eclipse, Jenkins, Maven
+- マージ機能、ライセンスの付け替え
 
 #### 6. QA
 あまった時間で質疑応答
