@@ -21,8 +21,8 @@ TeamServerからエージェントをDL
   ```
   cd C:\contrast_training\PetClinicDemo
   java -javaagent:contrast.jar ^
-  -Dcontrast.server.name=user05_svr ^
-  -Dcontrast.agent.java.standalone_app_name=PetClinic_user05 ^
+  -Dcontrast.server.name=userXX_svr ^
+  -Dcontrast.agent.java.standalone_app_name=PetClinic_userXX ^
   -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
 - PetClinicにアクセス  
@@ -48,8 +48,8 @@ Eclipse, Jenkins, Maven
 - マージ機能、ライセンスの付け替え  
   ```
   java -javaagent:contrast.jar ^
-  -Dcontrast.server.name=user05_svr ^
-  -Dcontrast.agent.java.standalone_app_name=PetClinic_user05-2 ^
+  -Dcontrast.server.name=userXX_svr ^
+  -Dcontrast.agent.java.standalone_app_name=PetClinic_userXX-2 ^
   -jar ./target/spring-petclinic-1.5.1.jar --server.port=8002
   ```
 
