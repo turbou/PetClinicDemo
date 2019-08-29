@@ -26,7 +26,8 @@ TeamServerからエージェントをDL
   -Dcontrast.agent.java.standalone_app_name=PetClinic_userXX ^
   -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
-(Mac)
+
+  (Mac)
   ```
   java -javaagent:/Users/turbou/contrast/agents/Java/contrast.jar -Dcontrast.server.name=user00_svr -Dcontrast.agent.java.standalone_app_name=PetClinic_user00 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
