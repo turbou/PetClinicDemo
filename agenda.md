@@ -20,7 +20,7 @@ TeamServerからエージェントをDL
 - アプリ起動  
 (Windows)
   ```
-  cd C:\contrast_training\PetClinicDemo
+  cd C:\contrast_training
   java -javaagent:contrast.jar ^
   -Dcontrast.server.name=userXX_svr ^
   -Dcontrast.agent.java.standalone_app_name=PetClinic_userXX ^
