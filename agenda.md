@@ -6,7 +6,7 @@
 1.8であること
 - アプリ（Jar）の確認  
   ```
-  C:\contrast_training\PetClinicDemo\target
+  C:\contrast_training\target
   spring-petclinic2-1.5.1.jar
   ```
 - TeamServerへのログイン  
@@ -16,7 +16,7 @@ userXX@ub-training.com/XXXXX
 #### 2. 対象アプリケーションのオンボード（15）
 - エージェントDL  
 TeamServerからエージェントをDL  
-`C:¥contrast_training¥PetClinicDemo`に
+`C:¥contrast_training`に
 - アプリ起動  
   ```
   cd C:\contrast_training\PetClinicDemo
