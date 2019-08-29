@@ -18,12 +18,17 @@ userXX@ub-training.com/XXXXX
 TeamServerからエージェントをDL  
 `C:¥contrast_training`に
 - アプリ起動  
+(Windows)
   ```
   cd C:\contrast_training\PetClinicDemo
   java -javaagent:contrast.jar ^
   -Dcontrast.server.name=userXX_svr ^
   -Dcontrast.agent.java.standalone_app_name=PetClinic_userXX ^
   -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
+  ```
+(Mac)
+  ```
+  java -javaagent:/Users/turbou/contrast/agents/Java/contrast.jar -Dcontrast.server.name=user00_svr -Dcontrast.agent.java.standalone_app_name=PetClinic_user00 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
 - PetClinicにアクセス  
 http://localhost:8001/
