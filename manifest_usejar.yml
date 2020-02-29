@@ -1,0 +1,11 @@
+---
+applications:
+- name: petclinic
+  memory: 1G
+  instances: 1
+  timeout: 180
+  path: ./target/spring-petclinic-1.5.1.jar
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack.git
+  env:
+    JAVA_OPTS: -javaagent:/home/vcap/app/BOOT-INF/classes/contrast.jar -Dcontrast.config.path=/home/vcap/app/BOOT-INF/classes/contrast_security.yaml
