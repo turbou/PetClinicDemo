@@ -10,5 +10,5 @@ applications:
   services:
   - contrast-security-service
   env:
-    JAVA_OPTS: -Dcontrast.override.appname=PetClinicPCF -Dcontrast.server.name=Pivotal-taka-petclinic -Dcontrast.server.environment=qa Dcontrast.agent.polling.app_activity_ms=3000 -Dcontrast.server.activity.period=3000 -Dcontrast.agent.logger.level=DEBUG
+    JAVA_OPTS: -Dcontrast.override.appname=PetClinicPCF1 -Dcontrast.server.name=PCF-taka1 -Dcontrast.server.environment=qa Dcontrast.agent.polling.app_activity_ms=3000 -Dcontrast.server.activity.period=3000 -Dcontrast.agent.logger.level=ERROR
 
