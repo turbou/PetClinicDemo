@@ -5,7 +5,7 @@ java -javaagent:/Users/turbou/contrast/agent/java/contrast.jar \
 -Dcontrast.application.version=v8001 \
 -Dcontrast.agent.contrast_working_dir=contrast-8001/ \
 -Dcontrast.agent.logger.level=INFO \
--Dcontrast.app.activity.period=3000 \
--Dcontrast.server.activity.period=3000 \
--Dcontrast.timeout=10 \
+-Dcontrast.agent.polling.app_activity_ms=3000 \
+-Dcontrast.agent.polling.server_activity_ms=3000 \
+-Dcontrast.api.timeout_ms=1000 \
 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
