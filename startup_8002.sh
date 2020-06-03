@@ -1,11 +1,11 @@
 java -javaagent:/Users/turbou/contrast/agent/java/contrast.jar \
--Dcontrast.server.environment=qa \
+-Dcontrast.server.environment=development \
 -Dcontrast.server.name=MacBookPro \
 -Dcontrast.agent.java.standalone_app_name=PetClinic_8002 \
 -Dcontrast.application.version=v8002 \
 -Dcontrast.agent.contrast_working_dir=contrast-8002/ \
 -Dcontrast.agent.logger.level=INFO \
--Dcontrast.app.activity.period=10000 \
--Dcontrast.server.activity.period=10000 \
+-Dcontrast.app.activity.period=5000 \
+-Dcontrast.server.activity.period=5000 \
 -Dcontrast.timeout=10 \
 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8002
