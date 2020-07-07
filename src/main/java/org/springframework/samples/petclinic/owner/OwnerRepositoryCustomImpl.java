@@ -35,10 +35,16 @@ public class OwnerRepositoryCustomImpl implements OwnerRepository {
 	@Override
 	public Owner findById(Integer id) {
 		System.out.println("Vulnerable method 2");
+//      unsafe -- start
         String sqlQuery = "SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id = " + id;
-
         TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+//      unsafe -- end
 
+//      safe -- start
+//        String sqlQuery = "SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id = :id";
+//        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+//        query.setParameter("id", id);
+//      safe -- end
         return query.getSingleResult();
 	}
 
