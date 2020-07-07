@@ -23,7 +23,7 @@ public class OwnerRepositoryCustomImpl implements OwnerRepository {
         String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName +"'";
         TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
 //      unsafe -- end
-        // test push push
+        // test push push push
 //      safe -- start
 //        String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
 //        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
