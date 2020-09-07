@@ -15,7 +15,9 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
+      - cp appspec.yml target/
 artifacts:
   files:
-    - target/spring-petclinic-1.5.1.jar
+    - target/*
+  discard-paths: yes
 
