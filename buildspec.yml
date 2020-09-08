@@ -18,6 +18,8 @@ phases:
 artifacts:
   files:
     - target/spring-petclinic-1.5.1.jar
+    - startup_8081.sh
     - appspec.yml
+    - deploy/*
   discard-paths: yes
 

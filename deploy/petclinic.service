@@ -1,0 +1,11 @@
+[Unit]
+Description = petclinic
+After = syslog.target
+
+[Service]
+ExecStart = /tmp/startup_8081.sh
+Restart = always
+Type = simple
+User = root
+Group = root
+SuccessExitStatus = 143

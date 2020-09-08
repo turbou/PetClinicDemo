@@ -3,4 +3,17 @@ os: linux
 files:
   - source: ./spring-petclinic-1.5.1.jar
     destination: /tmp
+  - source: ./startup_8081.sh
+    destination: /tmp
+  - source: ./petclinic.service
+    destination: /etc/systemd/system/
+hooks:
+  ApplicationStop:
+    - location: stopapp.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: startapp.sh
+      timeout: 300
+      runas: root
 
