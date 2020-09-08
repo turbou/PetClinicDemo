@@ -1,3 +1,4 @@
+#!/bin/sh
 java -javaagent:/tmp/contrast.jar \
 -Dcontrast.server.environment=development \
 -Dcontrast.server.name=ec2_CentOS7 \
