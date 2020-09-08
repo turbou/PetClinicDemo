@@ -8,6 +8,10 @@ files:
   - source: ./petclinic.service
     destination: /etc/systemd/system/
 hooks:
+  BeforeInstall:
+    - location: clean.sh
+      timeout: 300
+      runas: root
   ApplicationStop:
     - location: stopapp.sh
       timeout: 300
