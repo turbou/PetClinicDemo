@@ -3,13 +3,20 @@ os: linux
 files:
   - source: ./spring-petclinic-1.5.1.jar
     destination: /tmp
+    overwrite: yes
   - source: ./startup_8081.sh
     destination: /tmp
-  #- source: ./petclinic.service
-  #  destination: /etc/systemd/system/
+    overwrite: yes
+  - source: ./petclinic.service
+    destination: /etc/systemd/system/
+    overwrite: yes
 hooks:
   BeforeInstall:
     - location: clean.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: daemon_reload.sh
       timeout: 300
       runas: root
   ApplicationStop:
