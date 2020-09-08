@@ -5,8 +5,8 @@ files:
     destination: /tmp
   - source: ./startup_8081.sh
     destination: /tmp
-  - source: ./petclinic.service
-    destination: /etc/systemd/system/
+  #- source: ./petclinic.service
+  #  destination: /etc/systemd/system/
 hooks:
   BeforeInstall:
     - location: clean.sh
