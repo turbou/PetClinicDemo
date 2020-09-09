@@ -7,7 +7,7 @@ phases:
     commands:
       - echo Install Software
       - export LC_ALL="en_US.utf8"
-      - apt-get install -y curl
+      - yum install -y curl
       - ./agent_download.sh
   pre_build:
     commands:
