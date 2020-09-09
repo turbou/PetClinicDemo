@@ -9,21 +9,17 @@ phases:
       - export LC_ALL="en_US.utf8"
       - yum install -y curl
       - ./agent_download.sh
-      - cp contrast.jar /tmp/
-      - cp startup_8081.sh /tmp/
-      - cp spring-petclinic-1.5.1.jar /tmp/
-      - cp petclinic.service /etc/systemd/system/
-      - ./daemon_reload.sh
   pre_build:
     commands:
       - echo Start Petclinic
-      #- ./startup_8081_for_test.sh
-      - ./startapp.sh
   build:
     commands:
       - echo Test started on `date`
+      - nohup ./startup_8081_for_test.sh & echo $! > pidfile
+      - sleep 120
+      - echo Test!!
+      - kill $(cat pidfile)
   post_build:
     commands:
       - echo Test completed on `date`
-      - ./stopapp.sh
 
