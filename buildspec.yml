@@ -19,6 +19,7 @@ artifacts:
   files:
     - target/spring-petclinic-1.5.1.jar
     - startup_8081.sh
+    - check_vul.sh
     - startup_8081_for_test.sh
     - agent_download.sh
     - testspec.yml
