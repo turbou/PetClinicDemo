@@ -17,18 +17,19 @@ public class OwnerRepositoryCustomImpl implements OwnerRepository {
     private EntityManager entityManager;
     
 	public Collection<Owner> findByLastName(String lastName) {
-		System.out.println("Vulnerable method 1");
-//      unsafe -- 検索機能を開発
-        String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName + "'";
-        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
-//      unsafe -- end
+            System.out.println("Vulnerable method 1");
+            // unsafe -- 検索機能を開発
+            String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName + "'";
+            TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+            // unsafe -- end
 
-//      safe -- start
-//        String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
-//        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
-//        query.setParameter("lastName", lastName);
-//      safe -- end
-        return query.getResultList();
+            // safe -- start
+            //String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
+            //TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+            //query.setParameter("lastName", lastName);
+            // safe -- end
+            return query.getResultList();
+        }
 
 	@Override
 	public Owner findById(Integer id) {
