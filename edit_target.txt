@@ -1,0 +1,1 @@
+./src/main/java/org/springframework/samples/petclinic/owner/OwnerRepositoryCustomImpl.java
