@@ -16,7 +16,7 @@ phases:
     commands:
       - echo Test started on `date`
       - nohup ./startup_8081_for_test.sh & echo $! > pidfile
-      - sleep 60
+      - sleep 40
       - curl http://localhost:8081/owners?lastName=Davis
       - kill $(cat pidfile)
   post_build:
