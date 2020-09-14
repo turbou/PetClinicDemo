@@ -15,12 +15,12 @@ phases:
   build:
     commands:
       - echo Test started on `date`
-      - nohup ./startup_8081_for_test.sh & echo $! > pidfile
+      - nohup ./startup_8081_for_test.sh $CODEBUILD_BUILD_NUMBER & echo $! > pidfile
       - sleep 40
       - curl http://localhost:8081/owners?lastName=Davis
       - kill $(cat pidfile)
   post_build:
     commands:
       - echo Test completed on `date`
-      - ./check_vul.sh
+      - ./check_vul.sh $CODEBUILD_BUILD_NUMBER
 
