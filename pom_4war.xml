@@ -132,14 +132,6 @@
         <artifactId>sonar-maven-plugin</artifactId>
         <version>3.4.0.905</version>
     </dependency>
-
-
-    <!-- Contrast Security -->
-    <dependency>
-      <groupId>com.contrastsecurity</groupId>
-      <artifactId>contrast-maven-plugin</artifactId>
-      <version>2.3</version>
-    </dependency>
     
     <!-- Girish: Integration test with selenium -->
     <dependency>
@@ -169,38 +161,9 @@
 
   <build>
     <plugins>
-          <!-- 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
- 
-        <configuration>
-           - Verify security and coverage during automated tests. -
-            <argLine>
-            -javaagent:${project.basedir}/jacocoagent.jar=destfile=${project.basedir}/target/jacoco.exec
-            -javaagent:${project.basedir}/contrast.jar
-            -Dcontrast.dir=${project.basedir}/working
-            -Dcontrast.log.daily=true
-            -Dcontrast.override.appname=spring-petclinic
-            -Dcontrast.override.appversion=spring-petclinic-11
-            -Dcontrast.server=TEST-GIRISH
-            -Dcontrast.env=qa
-          </argLine>
-        </configuration>
-      </plugin>
-          -->
-            
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <!-- 
-        <configuration>
-          <jvmArguments>
-            -Dcontrast.dir=${project.basedir}/working
-            -Dcontrast.log=DEBUG
-          </jvmArguments>
-        </configuration>
-        -->
         <executions>
           <execution>
             <!-- Spring Boot Actuator displays build-related information 
@@ -285,50 +248,6 @@
             <version>${webjars-bootstrap.version}</version>
           </dependency>
         </dependencies>
-      </plugin>
-      <plugin>
-         <groupId>com.contrastsecurity</groupId>
-         <artifactId>contrast-maven-plugin</artifactId>
-         <version>2.3</version>
-         <executions>
-             <execution>
-                 <id>install-contrast-jar</id>
-                 <goals>
-                     <goal>install</goal>
-                 </goals>
-             </execution>
-             <execution>
-                 <id>verify-with-contrast</id>
-                 <phase>post-integration-test</phase>
-                 <goals>
-                     <goal>verify</goal>
-                 </goals>
-             </execution>
-         </executions>
-         <!--  Contrast EOP -->
-         <configuration>
-             <!-- ===== Personal Info ===== -->
-             <!-- user mail address -->
-	         <!--<username>demo.person@contrastsecurity.com</username>-->
-	         <username>turbou@i.softbank.jp</username>
-	         <!-- Personal Keys -->
-	         <!--<serviceKey>O50URMMTZDRZVF13</serviceKey>-->
-	         <serviceKey>9SQZ07IYPV48ZDAU</serviceKey>
-             <!-- ===== Organization Info ===== -->
-             <!--
-	         <apiUrl>http://ec2amaz-igi385g/Contrast/api</apiUrl>	         
-	         <orgUuid>3f6fb3c2-aade-4f30-8980-ef7e12ef9887</orgUuid>
-	         <apiKey>XcE6RIo6GcG4avzN</apiKey>
-	         -->
-	         <apiUrl>https://eval.contrastsecurity.com/Contrast/api</apiUrl>	         
-	         <orgUuid>442311fd-c9d6-44a9-a00b-2b03db2d816c</orgUuid>
-	         <apiKey>EFhK6pIuD6mh5RX6YQ2iMOOavh9Mc52u</apiKey>
-	         <standalone>true</standalone>
-	         <appName>PetClinic</appName>
-             <!-- ===== Settings ===== -->
-	         <serverName>Maven.BuildServer.Local</serverName>
-	         <minSeverity>High</minSeverity>
-         </configuration>
       </plugin>
     </plugins>
     <pluginManagement>
