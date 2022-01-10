@@ -5,11 +5,9 @@ phases:
     runtime-versions:
       java: corretto8
   pre_build:
-    on-failure: ABORT
     commands:
       - echo Nothing to do in the pre_build phase...
       - export LC_ALL="en_US.utf8"
-      - ./check_agent.sh
   build:
     commands:
       - echo Build started on `date`
