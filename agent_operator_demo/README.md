@@ -10,11 +10,11 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 ## 大まかな流れ
 1. Contrastエージェントオペレータのセットアップ  
   エージェントオペレータのインストールとセットアップまで
-3. PetClinicのデプロイ  
+2. PetClinicのデプロイ  
   PetClinicのビルドからコンテナ化、そしてKubernetesへのデプロイ
-5. PetClinicへのエージェントの組み込み  
+3. PetClinicへのエージェントの組み込み  
   ContrastエージェントオペレータをPetClinicを接続します。
-7. Contrastサーバのオンボード確認  
+4. Contrastサーバのオンボード確認  
   オンボード確認と打鍵を行い脆弱性が検知されるまでを確認します。
 
 ## 1. Contrastエージェントオペレータのセットアップ
@@ -74,19 +74,40 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```
 
 ## 2. PetClinicのデプロイ
-### jarの作成
+### jarの作成とDockerイメージの作成
 - ビルド  
-  このREADME.mdがある階層の１つ上（pom.xmlがあるところ）で作業します。  
+  この作業だけ、README.mdがある階層の１つ上で  
   ```bash
+  # jarの作成
   mvn clean package -DskipTests
+  # Dockerイメージの作成
+  docker build -t petclinic_docker .
   ```
-  target/spring-petclinic-1.5.1.jarが生成されています。
-### Dockerイメージの作成
-- Dockerビルド  
-  mvnを実行した場所と同  
+### PetClinicのデプロイ
+このREADME.mdがある階層で作業します。  
+- デプロイ  
   ```bash
-  docker build -t petclinic_docker -f agent_operator_demo/Dockerfile .
+  kubectl apply -f deployment.yaml
+  # Podのステータス確認
+  kubectl get pods
   ```
+
+## 3. PetClinicへのエージェントの組み込み
+```bash
+kubectl apply -f - <<EOF
+apiVersion: agents.contrastsecurity.com/v1beta1
+kind: AgentInjector
+metadata:
+  name: injector-for-petclinic
+  namespace: default
+spec:
+  type: java
+  selector:
+    labels:
+      - name: app
+        value: petclinic-agent-operator-demo
+EOF
+```
 
 ## 後片付け
 1. AgentInjectorを削除します。  
