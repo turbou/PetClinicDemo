@@ -101,6 +101,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
         environment: QA
     suppressDefaultServerName: false
     suppressDefaultApplicationName: false
+  EOF
   ```
 - エージェントの組み込み  
   ```bash
