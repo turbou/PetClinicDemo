@@ -71,7 +71,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 ## 2. PetClinicのデプロイ
 ### jarの作成とDockerイメージの作成
 - ビルド  
-  この作業だけ、README.mdがある階層の１つ上で  
+  この作業だけ、README.mdがある階層の１つ上で作業してください。  
   ```bash
   # jarの作成
   mvn clean package -DskipTests
@@ -79,7 +79,6 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   docker build -t petclinic_docker .
   ```
 ### PetClinicのデプロイ
-このREADME.mdがある階層で作業します。  
 - デプロイ  
   ```bash
   kubectl apply -f deployment.yaml
