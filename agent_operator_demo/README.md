@@ -83,9 +83,9 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   target/spring-petclinic-1.5.1.jarが生成されています。
 ### Dockerイメージの作成
 - Dockerビルド  
-  このREADME.mdのある階層(Dockerfileがあるところ)に戻ります。  
+  mvnを実行した場所と同  
   ```bash
-  docker build -t petclinic_docker .
+  docker build -t petclinic_docker -f agent_operator_demo/Dockerfile .
   ```
 
 ## 後片付け
