@@ -87,6 +87,21 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```
 
 ## 3. PetClinicへのエージェントの組み込み
+- エージェントへの設定
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: agents.contrastsecurity.com/v1beta1
+  kind: AgentConfiguration
+  metadata:
+    name: petclinic-agent-configuration
+    namespace: default
+  spec:
+    yaml: |
+      server:
+        environment: QA
+    suppressDefaultServerName: false
+    suppressDefaultApplicationName: false
+  ```
 - エージェントの組み込み  
   ```bash
   kubectl apply -f - <<EOF
@@ -101,6 +116,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
       labels:
         - name: app
           value: petclinic-agent-operator-demo
+    configuration:
+      name: petclinic-agent-configuration
   EOF
   ```
 - PetClinicのログを確認  
