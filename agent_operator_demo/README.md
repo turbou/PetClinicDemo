@@ -42,7 +42,6 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   # ==================================================== #
   kubectl -n contrast-agent-operator \
         create secret generic default-agent-connection-secret \
-        --from-literal=contrastUrl=https://eval.contrastsecurity.com/Contrast \
         --from-literal=apiKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
         --from-literal=serviceKey=XXXXXXXXXXXXXXXX \
         --from-literal=userName=XXXXX@contrastsecurity.com
@@ -58,9 +57,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   spec:
     template:
       spec:
-        url:
-          secretName: default-agent-connection-secret
-          secretKey: contrastUrl
+        url: https://eval.contrastsecurity.com/Contrast
         apiKey:
           secretName: default-agent-connection-secret
           secretKey: apiKey
