@@ -44,6 +44,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
         --from-literal=userName=XXXXX@contrastsecurity.com
   ```
 - ClusterAgentConnectionの作成  
+  **spec.template.spec.urlの値は接続するContrastサーバに応じて変更してください。**
   ```bash
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
@@ -54,7 +55,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   spec:
     template:
       spec:
-        url: https://eval.contrastsecurity.com/Contrast # ここは接続するContrastサーバに応じて変更してください。
+        url: https://eval.contrastsecurity.com/Contrast
         apiKey:
           secretName: default-agent-connection-secret
           secretKey: apiKey
