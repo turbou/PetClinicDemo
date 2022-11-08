@@ -108,6 +108,9 @@ spec:
         value: petclinic-agent-operator-demo
 EOF
 ```
+## 4. Contrastサーバのオンボード確認
+http://localhost:30000/ に接続して適当に画面遷移してください。  
+Contrastサーバにオンボードされていることを確認します。
 
 ## 後片付け
 1. AgentInjectorを削除します。  
