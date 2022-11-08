@@ -19,8 +19,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ## 1. Contrastエージェントオペレータのセットアップ
 ### エージェントオペレータのインストール
-- インストール
 参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
+- インストール  
   ```bash
   # オペレータのインストール  
   kubectl apply -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
