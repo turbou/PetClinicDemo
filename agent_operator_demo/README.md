@@ -90,26 +90,19 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ## 後片付け
 1. AgentInjectorを削除します。  
-  ```bash
-  kubectl -n default delete agentinjector injector-for-petclinic
-  ```
+    ```bash
+    kubectl -n default delete agentinjector injector-for-petclinic
+    ```
 2. サービスを停止します。
     ```bash
-    kubectl delete -f deployment.yml 
+    kubectl delete -f deployment.yaml 
     ```
 3. kubectlのSecretとConfigMapを削除します。 (残していても問題ないです)
     ```bash
-    kubectl get secrets
-    kubectl delete secret contrast-database contrast-license
-    kubectl get configmap
-    kubectl delete configmaps contrast-config
+    kubectl -n contrast-agent-operator get secrets
+    kubectl -n contrast-agent-operator delete secret default-agent-connection-secret
     ```
-4. pvc, pvの削除
-    ```bash
-    kubectl get pvc,pv
-    kubectl delete pvc agents-contrast-0 data-contrast-0
-    ```    
-5. Contrastエージェントオペレータの削除  
+4. Contrastエージェントオペレータの削除  
   ```bash
   kubectl delete -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
   ```
