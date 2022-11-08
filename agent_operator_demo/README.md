@@ -1,7 +1,61 @@
-## 脆弱性デモ用PetClinic
+# Contrastエージェントオペレータデモ（Kubernetes編）
 
-### 前提条件
-JDK8
+## 前提条件
+Mac Docker Desktopで動作確認済み
+
+## 前準備
+### Kubernetesを有効化
+docker desktopの設定画面でKubernetesを有効化しておいてください。
+
+## 手順
+### エージェントオペレータのインストール
+- インストール
+参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
+  ```bash
+  # オペレータのインストール  
+  kubectl apply -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
+  # Readyになったら知らせるようにする（任意）
+  kubectl -n contrast-agent-operator wait pod --for=condition=ready --selector=app.kubernetes.io/name=operator,app.kubernetes.io/part-of=contrast-agent-operator--timeout=30s
+  ```
+- エージェントオペレータの起動確認  
+  ```bash
+  kubectl -n contrast-agent-operator get pods
+  ```
+  STATUSがRunningになっていればOKです。
+
+### エージェントオペレータの設定
+参考URL: https://docs.contrastsecurity.jp/ja/agent-operator-walkthrough.html#%E6%89%8B%E9%A0%86-2-%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%BF%E3%81%AE%E8%A8%AD%E5%AE%9A  
+- Contrastサーバへの認証情報を設定
+  ```bash
+  kubectl -n contrast-agent-operator \
+        create secret generic default-agent-connection-secret \
+        --from-literal=apiKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+        --from-literal=serviceKey=XXXXXXXXXXXXXXXX \
+        --from-literal=userName=XXXXX@contrastsecurity.com
+  ```
+- およよ  
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: agents.contrastsecurity.com/v1beta1
+  kind: ClusterAgentConnection
+  metadata:
+    name: default-agent-connection
+    namespace: contrast-agent-operator
+  spec:
+    template:
+      spec:
+        url: https://app.contrastsecurity.com/Contrast # ここは接続先のContrastサーバに合わせて修正してください。
+        apiKey:
+          secretName: default-agent-connection-secret
+          secretKey: apiKey
+        serviceKey:
+          secretName: default-agent-connection-secret
+          secretKey: serviceKey
+        userName:
+          secretName: default-agent-connection-secret
+          secretKey: userName
+  EOF
+  ```
 
 ### ビルド方法
 (jar生成)
