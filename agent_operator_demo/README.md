@@ -88,14 +88,3 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   docker build -t petclinic_docker .
   ```
 
-### 実行方法
-SpringBoot
-```
-java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
-```
-次のURLでアクセス: http://localhost:8001/
-
-### Contrast付き実行方法
-```
-java -javaagent:/path/to/contrast.jar -Dcontrast.server.name=user05_svr -Dcontrast.agent.java.standalone_app_name=PetClinic_user05 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
-```
