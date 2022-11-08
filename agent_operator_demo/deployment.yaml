@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: petclinic-agent-operator-demo
+  name: petclinic-agent-operator-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic-agent-operator-demo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: petclinic-agent-operator-demo
+    spec:
+      containers:
+      - image: petclinic_docker:latest
+        imagePullPolicy: IfNotPresent
+        name: petclinic-docker
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: petclinic-agent-operator-demo
+  name: petclinic-agent-operator-demo
+spec:
+  ports:
+  - name: 8080-8000
+    port: 8080
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: petclinic-agent-operator-demo
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+spec:
+  type: NodePort
+  selector:
+    app: petclinic-agent-operator-demo
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8000
+      nodePort: 30000
+
