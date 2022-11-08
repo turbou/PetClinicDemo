@@ -7,7 +7,17 @@ Mac Docker Desktopで動作確認済み
 ### Kubernetesを有効化
 docker desktopの設定画面でKubernetesを有効化しておいてください。
 
-## 手順
+## 大まかな流れ
+1. Contrastエージェントオペレータのセットアップ  
+  エージェントオペレータのインストールとセットアップまで
+3. PetClinicのデプロイ  
+  PetClinicのビルドからコンテナ化、そしてKubernetesへのデプロイ
+5. PetClinicへのエージェントの組み込み  
+  ContrastエージェントオペレータをPetClinicを接続します。
+7. Contrastサーバのオンボード確認  
+  オンボード確認と打鍵を行い脆弱性が検知されるまでを確認します。
+
+## 1. Contrastエージェントオペレータのセットアップ
 ### エージェントオペレータのインストール
 - インストール
 参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
@@ -63,15 +73,20 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   EOF
   ```
 
-### ビルド方法
-(jar生成)
-```
-mvn clean package -DskipTests
-```
-(war生成)
-```
-mvn clean package -DskipTests -f ./pom_4war.xml
-```
+## 2. PetClinicのデプロイ
+### jarの作成
+- ビルド  
+  このREADME.mdがある階層の１つ上（pom.xmlがあるところ）で作業します。  
+  ```bash
+  mvn clean package -DskipTests
+  ```
+  target/spring-petclinic-1.5.1.jarが生成されています。
+### Dockerイメージの作成
+- Dockerビルド  
+  このREADME.mdのある階層(Dockerfileがあるところ)に戻ります。  
+  ```bash
+  docker build -t petclinic_docker .
+  ```
 
 ### 実行方法
 SpringBoot
