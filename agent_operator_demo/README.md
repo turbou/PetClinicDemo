@@ -87,21 +87,26 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```
 
 ## 3. PetClinicへのエージェントの組み込み
-```bash
-kubectl apply -f - <<EOF
-apiVersion: agents.contrastsecurity.com/v1beta1
-kind: AgentInjector
-metadata:
-  name: injector-for-petclinic
-  namespace: default
-spec:
-  type: java
-  selector:
-    labels:
-      - name: app
-        value: petclinic-agent-operator-demo
-EOF
-```
+- エージェントの組み込み  
+  ```bash
+  kubectl apply -f - <<EOF
+  apiVersion: agents.contrastsecurity.com/v1beta1
+  kind: AgentInjector
+  metadata:
+    name: injector-for-petclinic
+    namespace: default
+  spec:
+    type: java
+    selector:
+      labels:
+        - name: app
+          value: petclinic-agent-operator-demo
+  EOF
+  ```
+- PetClinicのログを確認  
+  ```bash
+  kubectl logs -f Deployment/petclinic-agent-operator-demo
+  ```
 ## 4. Contrastサーバのオンボード確認
 http://localhost:30000/ に接続して適当に画面遷移してください。  
 Contrastサーバにオンボードされていることを確認します。
