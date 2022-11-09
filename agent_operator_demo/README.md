@@ -33,6 +33,10 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   kubectl -n contrast-agent-operator get pods
   ```
   STATUSがRunningになっていればOKです。
+- インストールによって追加されたリソースを確認できます。（任意）  
+  ```bash
+  kubectl api-resources | grep contrast
+  ```
 
 ### エージェントオペレータの設定
 参考URL: https://docs.contrastsecurity.jp/ja/agent-operator-walkthrough.html#%E6%89%8B%E9%A0%86-2-%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%BF%E3%81%AE%E8%A8%AD%E5%AE%9A  
@@ -43,6 +47,13 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
         --from-literal=apiKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
         --from-literal=serviceKey=XXXXXXXXXXXXXXXX \
         --from-literal=userName=XXXXX@contrastsecurity.com
+  ```
+- Secretが登録されているか確認  
+  ```bash
+  # 存在確認
+  kubectl -n contrast-agent-operator get secrets default-agent-connection-secret
+  # 詳細を確認する場合
+  kubectl -n contrast-agent-operator describe secrets/default-agent-connection-secret
   ```
 - ClusterAgentConnectionの作成  
   **spec.template.spec.urlの値は接続するContrastサーバに応じて変更してください。他は変更不要です。**
@@ -145,10 +156,12 @@ Contrastサーバにオンボードされていることを確認します。
     ```
 4. kubectlのSecretを削除します。 (残していても問題ないです)
     ```bash
-    kubectl -n contrast-agent-operator get secrets
+    # 存在確認
+    kubectl -n contrast-agent-operator get secrets default-agent-connection-secret
+    # 削除
     kubectl -n contrast-agent-operator delete secret default-agent-connection-secret
     ```
-5. Contrastエージェントオペレータの削除  
+5. Contrastエージェントオペレータのアンインストール  
   ```bash
   kubectl delete -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
   ```
