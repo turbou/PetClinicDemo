@@ -110,10 +110,22 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   spec:
     yaml: |
       server:
-        environment: QA
+        environment: production
+        name: mac_k8s
+      application:
+        name: k8s_PetClinic
+      protect:
+        enable: true
     suppressDefaultServerName: false
     suppressDefaultApplicationName: false
   EOF
+  ```
+- エージェント設定の確認（任意）  
+  ```bash
+  # 存在確認
+  kubectl get agentconfigurations petclinic-agent-configuration
+  # 詳細を確認する場合
+  kubectl describe agentconfigurations/petclinic-agent-configuration
   ```
 - エージェントの組み込み  
   ```bash
