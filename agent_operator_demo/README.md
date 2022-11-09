@@ -139,12 +139,16 @@ Contrastサーバにオンボードされていることを確認します。
     ```bash
     kubectl delete -f deployment.yaml 
     ```
-3. kubectlのSecretとConfigMapを削除します。 (残していても問題ないです)
+3. AgentConfigurationを削除します。
+    ```bash
+    kubectl delete agentconfigurations example-agent-configuration
+    ```
+4. kubectlのSecretを削除します。 (残していても問題ないです)
     ```bash
     kubectl -n contrast-agent-operator get secrets
     kubectl -n contrast-agent-operator delete secret default-agent-connection-secret
     ```
-4. Contrastエージェントオペレータの削除  
+5. Contrastエージェントオペレータの削除  
   ```bash
   kubectl delete -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
   ```
