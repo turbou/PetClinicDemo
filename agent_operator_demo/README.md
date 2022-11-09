@@ -91,7 +91,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```bash
   mvn clean package -DskipTests
   ```
-  SpringBoodで動作させる場合は  
+  SpringBoodで動作させる場合は（おまけ）  
   ```bash
   java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
   ```
@@ -102,10 +102,12 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   # Dockerイメージの作成
   docker build -t petclinic_docker .
   ```
-  Dockerコンテナで動作させる場合は  
+  Dockerコンテナで動作させる場合は（おまけ）  
   ```bash
-  
+  docker run -p 8001:8000 petclinic_docker:latest
   ```
+  http://localhost:8001
+
 ### PetClinicのデプロイ
 このREADME.mdのある階層に戻って作業します。
 - デプロイ  
