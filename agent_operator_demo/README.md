@@ -101,6 +101,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   # Podのステータス確認
   kubectl get pods
   ```
+  ここでPetClinicを閲覧することもできます。  
+  http://localhost:30000/
 
 ## 3. PetClinicへのエージェントの組み込み
 - エージェントへの設定
