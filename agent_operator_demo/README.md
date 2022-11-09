@@ -86,15 +86,28 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ## 2. PetClinicのデプロイ
 ### jarの作成とDockerイメージの作成
-- ビルド  
-  この作業だけ、README.mdがある階層の１つ上で作業してください。  
+- Jarビルド  
+  README.mdがある階層の１つ上で作業してください。  
   ```bash
-  # jarの作成
   mvn clean package -DskipTests
+  ```
+  SpringBoodで動作させる場合は  
+  ```bash
+  java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
+  ```
+  http://localhost:8001
+- Dockerビルド  
+  続けて同じ階層で作業してください。
+  ```bash
   # Dockerイメージの作成
   docker build -t petclinic_docker .
   ```
+  Dockerコンテナで動作させる場合は  
+  ```bash
+  
+  ```
 ### PetClinicのデプロイ
+このREADME.mdのある階層に戻って作業します。
 - デプロイ  
   ```bash
   kubectl apply -f deployment.yaml
