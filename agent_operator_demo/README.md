@@ -176,9 +176,16 @@ Contrastサーバにオンボードされていることを確認します。
     # 削除
     kubectl -n contrast-agent-operator delete secret default-agent-connection-secret
     ```
-5. Contrastエージェントオペレータのアンインストール  
-  ```bash
-  kubectl delete -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
-  ```
+5. ClusterAgentConnectionを削除します。（任意）
+    ```bash
+    # 存在確認
+    kubectl -n contrast-agent-operator get clusteragentconnections default-agent-connection
+    # 削除
+    kubectl -n contrast-agent-operator delete clusteragentconnections default-agent-connection
+    ```
+6. Contrastエージェントオペレータのアンインストール  
+    ```bash
+    kubectl delete -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
+    ```
 
 以上
