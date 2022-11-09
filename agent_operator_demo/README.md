@@ -79,6 +79,10 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
           secretKey: userName
   EOF
   ```
+- ClusterAgentConnectionが作成されているか確認  
+  ```bash
+  kubectl -n contrast-agent-operator get clusteragentconnections default-agent-connection
+  ```
 
 ## 2. PetClinicのデプロイ
 ### jarの作成とDockerイメージの作成
