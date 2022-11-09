@@ -128,6 +128,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   kubectl describe agentconfigurations/petclinic-agent-configuration
   ```
 - エージェントの組み込み  
+  **（注意）エージェントを組み込む際に対象アプリケーションの再起動が行われます。**
   ```yaml
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
