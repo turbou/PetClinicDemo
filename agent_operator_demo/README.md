@@ -22,9 +22,10 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
 - インストール  
   ```bash
-  # オペレータのインストール  
   kubectl apply -f https://github.com/Contrast-Security-OSS/agent-operator/releases/latest/download/install-prod.yaml
-  # Readyになったら知らせるようにする（任意）
+  ```
+- Readyになったら知らせるようにする（任意）
+  ```bash
   kubectl -n contrast-agent-operator wait pod --for=condition=ready --selector=app.kubernetes.io/name=operator,app.kubernetes.io/part-of=contrast-agent-operator --timeout=30s
   ```
 - エージェントオペレータの起動確認  
