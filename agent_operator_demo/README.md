@@ -28,15 +28,15 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```bash
   kubectl -n contrast-agent-operator wait pod --for=condition=ready --selector=app.kubernetes.io/name=operator,app.kubernetes.io/part-of=contrast-agent-operator --timeout=30s
   ```
+- インストールによって追加されたリソースを確認できます。（任意）  
+  ```bash
+  kubectl api-resources | grep contrast
+  ```
 - エージェントオペレータの起動確認  
   ```bash
   kubectl -n contrast-agent-operator get pods
   ```
   STATUSがRunningになっていればOKです。
-- インストールによって追加されたリソースを確認できます。（任意）  
-  ```bash
-  kubectl api-resources | grep contrast
-  ```
 
 ### エージェントオペレータの設定
 参考URL: https://docs.contrastsecurity.jp/ja/agent-operator-walkthrough.html#%E6%89%8B%E9%A0%86-2-%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%BF%E3%81%AE%E8%A8%AD%E5%AE%9A  
