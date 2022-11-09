@@ -178,6 +178,7 @@ Contrastサーバにオンボードされていることを確認します。
 
 ## 後片付け
 1. AgentInjectorを削除します。  
+    これによって、Contrastエージェントのない状態に戻ります。アプリの再起動が行われます。  
     ```bash
     kubectl -n default delete agentinjector injector-for-petclinic
     ```
