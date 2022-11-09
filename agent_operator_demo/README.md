@@ -120,7 +120,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   http://localhost:30000/
 
 ## 3. PetClinicへのエージェントの組み込み
-- エージェントへの設定
+- エージェントへの設定  
+  **yaml: |の中身はcontrast_security.yamlと同じ設定が書けるようになっています。**
   ```yaml
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
