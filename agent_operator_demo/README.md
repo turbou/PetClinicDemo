@@ -152,7 +152,10 @@ Contrastサーバにオンボードされていることを確認します。
     ```
 3. AgentConfigurationを削除します。
     ```bash
-    kubectl delete agentconfigurations example-agent-configuration
+    # 存在確認
+    kubectl get agentconfigurations petclinic-agent-configuration
+    # 削除
+    kubectl delete agentconfigurations petclinic-agent-configuration
     ```
 4. kubectlのSecretを削除します。 (残していても問題ないです)
     ```bash
