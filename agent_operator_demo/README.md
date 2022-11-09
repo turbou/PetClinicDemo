@@ -57,7 +57,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```
 - ClusterAgentConnectionの作成  
   **spec.template.spec.urlの値は接続するContrastサーバに応じて変更してください。他は変更不要です。**
-  ```bash
+  ```yaml
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
   kind: ClusterAgentConnection
@@ -100,7 +100,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ## 3. PetClinicへのエージェントの組み込み
 - エージェントへの設定
-  ```bash
+  ```yaml
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
   kind: AgentConfiguration
@@ -128,7 +128,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   kubectl describe agentconfigurations/petclinic-agent-configuration
   ```
 - エージェントの組み込み  
-  ```bash
+  ```yaml
   kubectl apply -f - <<EOF
   apiVersion: agents.contrastsecurity.com/v1beta1
   kind: AgentInjector
