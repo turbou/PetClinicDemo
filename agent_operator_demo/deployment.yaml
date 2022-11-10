@@ -6,7 +6,7 @@ metadata:
     app: petclinic-agent-operator-demo
   name: petclinic-agent-operator-demo
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: petclinic-agent-operator-demo
