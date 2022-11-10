@@ -178,7 +178,13 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```
 ## 4. Contrastサーバのオンボード確認
 http://localhost:30000/ に接続して適当に画面遷移してください。  
-Contrastサーバにオンボードされていることを確認します。
+Contrastサーバにオンボードされていることを確認します。  
+#### 確認ポイント
+- deployment.yamlのreplicasが2となっているため、Podが２つ起動されています。  
+  Contrastサーバのサーバ一覧上でも２つのサーバがオンボードされていることを確認できます。  
+- deployment.yamlのreplicasを3などに変更してから、再度、deployment.yamlをapplyすると  
+  自動的に新PodにContrastエージェントが組み込まれて、Contrastサーバのサーバ一覧に３つめの  
+  サーバがオンボードされます。
 
 ## 後片付け
 1. AgentInjectorを削除します。  
