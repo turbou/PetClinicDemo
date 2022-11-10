@@ -138,7 +138,6 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
     yaml: |
       server:
         environment: production
-        name: mac_k8s
       application:
         name: k8s_PetClinic
       protect:
