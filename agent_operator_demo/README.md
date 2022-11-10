@@ -204,7 +204,7 @@ Contrastサーバにオンボードされていることを確認します。
     # 削除
     kubectl -n contrast-agent-operator delete secret default-agent-connection-secret
     ```
-5. ClusterAgentConnectionを削除します。（任意）
+5. ClusterAgentConnectionを削除します。（任意です。どちらにしろ下のアンインストールで一緒に削除されます）
     ```bash
     # 存在確認
     kubectl -n contrast-agent-operator get clusteragentconnections default-agent-connection
