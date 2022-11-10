@@ -1,4 +1,9 @@
 # Contrastエージェントオペレータデモ（Kubernetes編）
+## 概要
+Kubernetes上で稼働するPetClinicにKubernetesオペレータの仕組みを使ってContrastエージェントを  
+組み込む手順について説明します。  
+Contrastエージェントオペレータについては以下のドキュメントにも詳細な説明があります。  
+https://contrast.atlassian.net/wiki/spaces/CS/pages/2790555758/Agent+Operators
 
 ## 前提条件
 Mac Docker Desktopで動作確認済み
