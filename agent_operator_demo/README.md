@@ -142,7 +142,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
         name: k8s_PetClinic
       protect:
         enable: true
-    suppressDefaultServerName: false
+    suppressDefaultServerName: true
     suppressDefaultApplicationName: false
   EOF
   ```
