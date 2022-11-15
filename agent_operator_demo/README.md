@@ -45,6 +45,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ### エージェントオペレータの設定
 参考URL: https://docs.contrastsecurity.jp/ja/agent-operator-walkthrough.html#%E6%89%8B%E9%A0%86-2-%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%BF%E3%81%AE%E8%A8%AD%E5%AE%9A  
+参考URL: https://contrast.atlassian.net/wiki/spaces/CS/pages/2790555758/Agent+Operators  
 - Contrastサーバへの認証情報を設定
   ```bash
   kubectl -n contrast-agent-operator \
