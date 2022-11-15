@@ -165,6 +165,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
     namespace: default
   spec:
     type: java
+    version: latest
     selector:
       labels:
         - name: app
