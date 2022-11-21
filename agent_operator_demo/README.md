@@ -49,6 +49,9 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   Dockerコンテナで動作させる場合は（おまけ）  
   ```bash
   docker run -p 8001:8000 petclinic_docker:latest
+  
+  # Contrastエージェント組み込みのDockerコンテナを起動する場合（おまけ）
+  docker run -p 8001:8000 petclinic_docker_with_agent:latest
   ```
   http://localhost:8001
 
