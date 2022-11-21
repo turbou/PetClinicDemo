@@ -44,14 +44,19 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   docker build -t petclinic_docker .
   
   # Contrastエージェント組み込みのDockerイメージを作る場合（おまけ）
-  docker build -f Dockerfile_with_JavaAgent -t petclinic_docker_with_agent .
+  docker build -f Dockerfile_with_JavaAgent --build-arg CONTRAST_AGENT_VERSION=4.7.1 -t petclinic_docker_with_agent . 
   ```
   Dockerコンテナで動作させる場合は（おまけ）  
   ```bash
   docker run -p 8001:8000 petclinic_docker:latest
   
   # Contrastエージェント組み込みのDockerコンテナを起動する場合（おまけ）
-  docker run -p 8001:8000 petclinic_docker_with_agent:latest
+  docker run -p 8001:8000 \
+  -e CONTRAST__API__API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
+  -e CONTRAST__API__SERVICE_KEY=YYYYYYYYYYYYYYYY \
+  -e CONTRAST__API__URL=https://eval.contrastsecurity.com/Contrast \
+  -e CONTRAST__API__USER_NAME=XXXXX@contrastsecurity.com \
+  petclinic_docker_with_agent:latest
   ```
   http://localhost:8001
 
