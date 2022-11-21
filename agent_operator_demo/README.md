@@ -69,6 +69,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   kubectl get pods
   
   # Contrastエージェント組み込みのDockerコンテナで稼働させる場合（おまけ）
+  # 事前にyaml内のCONTRAST__API__API_KEYなどの値を設定しておいてください。
   kubectl apply -f deployment_with_agent.yaml
   ```
   ここでPetClinicを閲覧することもできます。  
