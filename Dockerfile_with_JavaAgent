@@ -1,0 +1,8 @@
+FROM openjdk:8-jdk-alpine
+ARG JAR_FILE=target/*.jar
+ARG CONTRAST_AGENT_VERSION
+ADD https://repo1.maven.org/maven2/com/contrastsecurity/contrast-agent/$CONTRAST_AGENT_VERSION/contrast-agent-$CONTRAST_AGENT_VERSION.jar /opt/contrast/contrast.jar
+COPY ${JAR_FILE} app.jar
+ENV CONTRAST__APPLICATION__NAME "PetClinicOnDocker"
+ENV JAVA_TOOL_OPTIONS "-javaagent:/opt/contrast/contrast.jar"
+ENTRYPOINT ["java","-jar","/app.jar"]
