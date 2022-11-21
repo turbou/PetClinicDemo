@@ -14,11 +14,14 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 
 ## 大まかな流れ
 1. PetClinicのデプロイ  
-  PetClinicのビルドからコンテナ化、そしてKubernetesへのデプロイ
+  PetClinicのJarビルドからDockerイメージ化、そしてKubernetesへのデプロイ
+
 2. Contrastエージェントオペレータのセットアップ  
   エージェントオペレータのインストールとセットアップまで
+
 3. PetClinicへのエージェントの組み込み  
   ContrastエージェントオペレータをPetClinicを接続します。
+
 4. Contrastサーバのオンボード確認  
   オンボード確認と打鍵を行い脆弱性が検知されるまでを確認します。
 
