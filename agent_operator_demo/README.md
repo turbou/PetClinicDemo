@@ -42,6 +42,9 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```bash
   # Dockerイメージの作成
   docker build -t petclinic_docker .
+  
+  # Contrastエージェント組み込みのDockerイメージを作る場合（おまけ）
+  docker build -f Dockerfile_with_JavaAgent -t petclinic_docker petclinic_docker_with_agent .
   ```
   Dockerコンテナで動作させる場合は（おまけ）  
   ```bash
