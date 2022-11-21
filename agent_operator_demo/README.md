@@ -93,6 +93,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 - エージェントオペレータの起動確認  
   ```bash
   kubectl -n contrast-agent-operator get pods
+  # ログ確認
+  kubectl logs -f deployment/contrast-agent-operator --namespace contrast-agent-operator
   ```
   STATUSがRunningになっていればOKです。
 
