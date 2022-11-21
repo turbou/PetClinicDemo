@@ -13,16 +13,51 @@ Mac Docker Desktopで動作確認済み
 docker desktopの設定画面でKubernetesを有効化しておいてください。
 
 ## 大まかな流れ
-1. Contrastエージェントオペレータのセットアップ  
-  エージェントオペレータのインストールとセットアップまで
-2. PetClinicのデプロイ  
+1. PetClinicのデプロイ  
   PetClinicのビルドからコンテナ化、そしてKubernetesへのデプロイ
+2. Contrastエージェントオペレータのセットアップ  
+  エージェントオペレータのインストールとセットアップまで
 3. PetClinicへのエージェントの組み込み  
   ContrastエージェントオペレータをPetClinicを接続します。
 4. Contrastサーバのオンボード確認  
   オンボード確認と打鍵を行い脆弱性が検知されるまでを確認します。
 
-## 1. Contrastエージェントオペレータのセットアップ
+## 1. PetClinicのデプロイ
+### jarの作成とDockerイメージの作成
+- Jarビルド  
+  README.mdがある階層の１つ上で作業してください。  
+  ```bash
+  mvn clean package -DskipTests
+  ```
+  SpringBoodで動作させる場合は（おまけ）  
+  ```bash
+  java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
+  ```
+  http://localhost:8001
+- Dockerビルド  
+  続けて同じ階層で作業してください。
+  ```bash
+  # Dockerイメージの作成
+  docker build -t petclinic_docker .
+  ```
+  Dockerコンテナで動作させる場合は（おまけ）  
+  ```bash
+  docker run -p 8001:8000 petclinic_docker:latest
+  ```
+  http://localhost:8001
+
+### PetClinicのデプロイ
+このREADME.mdのある階層に戻って作業します。
+- デプロイ  
+  ```bash
+  kubectl apply -f deployment.yaml
+  # Podのステータス確認
+  kubectl get pods
+  ```
+  ここでPetClinicを閲覧することもできます。  
+  http://localhost:30000/
+
+## 2. Contrastエージェントオペレータのセットアップ
 ### エージェントオペレータのインストール
 参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
 - インストール  
@@ -89,41 +124,6 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ```bash
   kubectl -n contrast-agent-operator get clusteragentconnections default-agent-connection
   ```
-
-## 2. PetClinicのデプロイ
-### jarの作成とDockerイメージの作成
-- Jarビルド  
-  README.mdがある階層の１つ上で作業してください。  
-  ```bash
-  mvn clean package -DskipTests
-  ```
-  SpringBoodで動作させる場合は（おまけ）  
-  ```bash
-  java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
-  ```
-  http://localhost:8001
-- Dockerビルド  
-  続けて同じ階層で作業してください。
-  ```bash
-  # Dockerイメージの作成
-  docker build -t petclinic_docker .
-  ```
-  Dockerコンテナで動作させる場合は（おまけ）  
-  ```bash
-  docker run -p 8001:8000 petclinic_docker:latest
-  ```
-  http://localhost:8001
-
-### PetClinicのデプロイ
-このREADME.mdのある階層に戻って作業します。
-- デプロイ  
-  ```bash
-  kubectl apply -f deployment.yaml
-  # Podのステータス確認
-  kubectl get pods
-  ```
-  ここでPetClinicを閲覧することもできます。  
-  http://localhost:30000/
 
 ## 3. PetClinicへのエージェントの組み込み
 - エージェントへの設定  
