@@ -161,6 +161,8 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
         environment: production
       application:
         name: k8s_PetClinic
+      assess:
+        enable: true
       protect:
         enable: true
     suppressDefaultServerName: true
