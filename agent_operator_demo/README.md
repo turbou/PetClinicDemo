@@ -28,6 +28,7 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
 ## 1. PetClinicのデプロイ
 ### jarの作成とDockerイメージの作成
 - Jarビルド  
+  **java1.8前提です。**  
   README.mdがある階層の１つ上で作業してください。  
   ```bash
   mvn clean package -DskipTests
