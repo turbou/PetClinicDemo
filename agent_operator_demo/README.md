@@ -76,6 +76,11 @@ docker desktopの設定画面でKubernetesを有効化しておいてくださ�
   ここでPetClinicを閲覧することもできます。  
   http://localhost:30000/
 
+- PetClinicのログを確認  
+  ```bash
+  kubectl logs -f Deployment/petclinic-agent-operator-demo
+  ```
+
 ## 2. Contrastエージェントオペレータのセットアップ
 ### エージェントオペレータのインストール
 参考URL: https://docs.contrastsecurity.jp/ja/install-agent-operator.html  
