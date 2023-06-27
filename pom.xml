@@ -144,6 +144,11 @@
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>com.contrastsecurity</groupId>
+      <artifactId>contrast-agent</artifactId>
+      <version>3.8.5.20504</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -234,6 +239,17 @@
             <version>${webjars-bootstrap.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+          <groupId>com.google.appengine</groupId>
+          <artifactId>appengine-maven-plugin</artifactId>
+          <version>1.9.84</version>
+          <configuration>
+              <jvmFlags>
+                  <jvmFlag>-javaagent:/Users/turbou/contrast/agent/java/contrast.jar</jvmFlag>
+                  <jvmFlag>-Dcontrast.agent.java.standalone_app_name=GAE_PetClinicDemo</jvmFlag>
+              </jvmFlags>
+          </configuration>
       </plugin>
     </plugins>
   </build>

@@ -70,10 +70,10 @@ public class ClinicServiceTests {
     
     @Test
     public void shouldFindOwnersByLastName() {
-        Collection<Owner> owners = this.owners.findByLastName("Davis");
+        Collection<Owner> owners = this.owners.findByLastNameUnsafe("Davis");
         assertThat(owners.size()).isEqualTo(2);
 
-        owners = this.owners.findByLastName("Daviss");
+        owners = this.owners.findByLastNameUnsafe("Daviss");
         assertThat(owners.isEmpty()).isTrue();
     }
 
@@ -89,7 +89,7 @@ public class ClinicServiceTests {
     @Test
     @Transactional
     public void shouldInsertOwner() {
-        Collection<Owner> owners = this.owners.findByLastName("Schultz");
+        Collection<Owner> owners = this.owners.findByLastNameUnsafe("Schultz");
         int found = owners.size();
 
         Owner owner = new Owner();
@@ -101,7 +101,7 @@ public class ClinicServiceTests {
         this.owners.save(owner);
         assertThat(owner.getId().longValue()).isNotEqualTo(0);
 
-        owners = this.owners.findByLastName("Schultz");
+        owners = this.owners.findByLastNameUnsafe("Schultz");
         assertThat(owners.size()).isEqualTo(found + 1);
     }
 

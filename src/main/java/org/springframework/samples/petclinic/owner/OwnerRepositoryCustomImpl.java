@@ -13,45 +13,59 @@ import org.springframework.transaction.annotation.Transactional;
 @Component("ownerRepositoryImpl")
 public class OwnerRepositoryCustomImpl implements OwnerRepository {
 
-	@PersistenceContext
+    @PersistenceContext
     private EntityManager entityManager;
-    
-	public Collection<Owner> findByLastName(String lastName) {
-            System.out.println("Vulnerable method 1");
-            // unsafe -- 検索機能を開発
-            String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName + "%'";
-            TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
-            // unsafe -- end
 
-            // safe -- start
-            //String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
-            //TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
-            //query.setParameter("lastName", lastName + "%");
-            // safe -- end
-            return query.getResultList();
+    public Collection<Owner> findByLastNameUnsafe(String lastName) {
+        System.out.println("Vulnerable method unsafe");
+        // unsafe -- 検索機能を開発
+        String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName + "%'";
+        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+        // unsafe -- end
+
+        // safe -- start
+        // String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
+        // TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+        // query.setParameter("lastName", lastName + "%");
+        // safe -- end
+        return query.getResultList();
+    }
+
+    public Collection<Owner> findByLastNameSafe(String lastName) {
+        System.out.println("Vulnerable method safe");
+        // unsafe -- 検索機能を開発
+        // String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE '" + lastName + "%'";
+        // TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+        // unsafe -- end
+
+        // safe -- start
+        String sqlQuery = "SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.lastName LIKE :lastName";
+        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+        query.setParameter("lastName", lastName + "%");
+        // safe -- end
+        return query.getResultList();
+    }
+
+    @Override
+    public Owner findById(Integer id) {
+        System.out.println("Vulnerable method 2");
+        String sqlQuery = "SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id = " + id;
+
+        TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public void save(Owner owner) {
+
+        // If the object already exists, then we can't directly use the detached object in persist.
+        if (owner.getId() != null) {
+            this.entityManager.merge(owner);
+            return;
         }
 
-	@Override
-	public Owner findById(Integer id) {
-		System.out.println("Vulnerable method 2");
-	    	String sqlQuery = "SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id = " + id;
-	    	
-	    	TypedQuery<Owner> query = this.entityManager.createQuery(sqlQuery, Owner.class);
-	
-	    	return query.getSingleResult();
-	}
-
-	@Override
-	public void save(Owner owner) {
-	
-		// If the object already exists, then we can't directly use the detached object in persist.
-		if (owner.getId() != null) {
-			this.entityManager.merge(owner);
-			return;
-		}
-		
-		this.entityManager.persist(owner);
-	}
+        this.entityManager.persist(owner);
+    }
 
 }
-

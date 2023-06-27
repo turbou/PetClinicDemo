@@ -87,15 +87,22 @@ class OwnerController {
         }
 
         // find owners by last name
-        Collection<Owner> results = this.owners.findByLastName(owner.getLastName());
+        Collection<Owner> results = null;
+        if (owner.getLastName().equals("Black")) {
+            System.out.println("Black");
+            results = this.owners.findByLastNameSafe(owner.getLastName());
+        } else {
+            System.out.println("Other");
+            results = this.owners.findByLastNameUnsafe(owner.getLastName());
+        }
         if (results.isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";
-        } else if (results.size() == 1) {
-            // 1 owner found
-            owner = results.iterator().next();
-            return "redirect:/owners/" + owner.getId();
+        //} else if (results.size() == 1) {
+        //    // 1 owner found
+        //    owner = results.iterator().next();
+        //    return "redirect:/owners/" + owner.getId();
         } else {
             // multiple owners found
             model.put("selections", results);
