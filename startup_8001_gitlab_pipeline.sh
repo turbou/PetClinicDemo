@@ -2,7 +2,7 @@
 if [ $# -eq 1 ]; then
     APP_VERSION=${1}
 fi
-java -javaagent:../target/contrast-agent-5.2.2.jar \
+java -javaagent:../target/contrast-agent-${AGENT_VERSION}.jar \
 -Dcontrast.api.url=${CONTRAST_URL} \
 -Dcontrast.api.api_key=${API_KEY} \
 -Dcontrast.api.service_key=${SERVICE_KEY} \
