@@ -1,5 +1,6 @@
 stages:
   - build
+  - agent
   - test
   - check
 
@@ -8,10 +9,18 @@ mvn-build:
   stage: build
   script:
     - mvn clean package -DskipTests
-    - mvn dependency:get -Dartifact=com.contrastsecurity:contrast-agent:$AGENT_VERSION -Ddest=./target
   artifacts:
     paths:
       - "target/*.jar"
+
+agent-download:
+  image: maven:3.8.6-jdk-8
+  stage: agent
+  script:
+    - mvn dependency:get -Dartifact=com.contrastsecurity:contrast-agent:$AGENT_VERSION -Ddest=./
+  artifacts:
+    paths:
+      - "contrast-agent-$AGENT_VERSION.jar"
 
 petclinic-test:
   image: ubuntu:20.04
@@ -33,7 +42,7 @@ petclinic-test:
     - wget https://bootstrap.pypa.io/pip/3.5/get-pip.py
     - python3 get-pip.py
     - pip --disable-pip-version-check install -r ./selenium/requirements.txt
-    - ./startup_8001_gitlab_pipeline.sh $AGENT_VERSION $CI_PIPELINE_IID &
+    - ./startup_8001_gitlab_pipeline.sh $CI_PIPELINE_IID &
     - sleep 210
     - pytest ./selenium/test_sQLInjection.py
     - sleep 30

@@ -2,7 +2,7 @@
 if [ $# -eq 1 ]; then
     APP_VERSION=${1}
 fi
-java -javaagent:../target/contrast-agent-${AGENT_VERSION}.jar \
+java -javaagent:./contrast-agent-${AGENT_VERSION}.jar \
 -Dcontrast.api.url=${CONTRAST_URL} \
 -Dcontrast.api.api_key=${API_KEY} \
 -Dcontrast.api.service_key=${SERVICE_KEY} \
@@ -17,4 +17,4 @@ java -javaagent:../target/contrast-agent-${AGENT_VERSION}.jar \
 -Dcontrast.agent.polling.app_activity_ms=3000 \
 -Dcontrast.agent.polling.server_activity_ms=3000 \
 -Dcontrast.api.timeout_ms=1000 \
--jar ../target/spring-petclinic-1.5.1.jar --server.port=8001
+-jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
