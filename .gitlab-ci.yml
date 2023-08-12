@@ -1,0 +1,57 @@
+stages:
+  - build
+  - test
+  - check
+
+mvn-build:
+  image: maven:3.8.6-jdk-8
+  stage: build
+  script:
+    - mvn clean package -DskipTests
+    - mvn dependency:get -Dartifact=com.contrastsecurity:contrast-agent:5.2.2 -Ddest=./target
+  artifacts:
+    paths:
+      - "target/*.jar"
+
+petclinic-test:
+  image: ubuntu:20.04
+  stage: test
+  services:
+    - name: selenium/standalone-chrome:latest
+      alias: selenium
+  variables:
+    FF_NETWORK_PER_BUILD: "true"
+  script:
+    - apt-get update
+    - apt-get install -y openjdk-8-jdk
+    - apt-get install -y telnet
+    - apt-get install -y expect
+    - apt-get install -y python3
+    - apt-get install -y openssl ca-certificates
+    - apt-get install -y wget
+    - apt-get install -y python3-distutils
+    - wget https://bootstrap.pypa.io/pip/3.5/get-pip.py
+    - python3 get-pip.py
+    - pip --disable-pip-version-check install -r ./requirements.txt
+    - ./startup.sh $CI_PIPELINE_IID &
+    - sleep 210
+    - pytest ./selenium/test_sQLInjection.py
+    - sleep 30
+    - kill -9 `jps -l | awk '/spring-petclinic-1.5.1.jar/ {print $1}'`
+
+securityGate:
+  image: ghcr.io/contrast-security-oss/integration-verify:latest
+  stage: check
+  variables:
+    API_KEY: $API_KEY
+    ORG_ID: $ORG_ID
+    API_URL: $URL
+    AUTH_HEADER: $AUTH
+    APP_NAME: $CI_PROJECT_NAME
+    BUILD_NUMBER: $CI_PIPELINE_IID
+    FAIL_THRESHOLD: 0
+    SEVERITIES: CRITICAL,HIGH
+  script:
+    - /usr/bin/env python3 /verify.py
+  allow_failure: true
+
