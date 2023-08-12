@@ -5,8 +5,33 @@
 - Gitlabにブランクのプロジェクトを作成しておいてください。
 
 ### 準備
-このプロジェクトのリポジトリをそのままGitlabのブランクプロジェクトに切り替えます。
+#### GitlabプロジェクトへのCICD用環境変数の設定
+作成したプロジェクトの *Settings> CI/CD* を開きます。  
+Variablesに以下の変数と値を設定します。**環境に合わせて適宜変更してください。**
+- AGENT_VERSION  
+  5.2.2
+- CONTRAST_URL  
+  https://eval.contrastsecurity.com/Contrast
+- ORG_ID  
+- API_KEY  
+- USER_NAME  
+- SERVICE_KEY  
+- AUTH_HEADER  
+- APP_NAME  
+  PetClinic_8001_GitlabDemo
+- ENVIRONMENT  
+  development
+- SERVER_NAME  
+  GitlabDemo
 
+#### PetClinicDemoの配置
+このプロジェクトのリポジトリをそのままGitlabのブランクプロジェクトに切り替えます。
+```bash
+git remote rename origin old-origin
+git remote add origin http://localhost:8080/root/petclinic.git
+git push -u origin --all
+```
+Gitlabに既に作成済みのプロジェクトにファイルが格納されていることを確認してください。
 
 ### ビルド方法
 (jar生成)
