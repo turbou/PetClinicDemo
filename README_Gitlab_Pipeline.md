@@ -31,26 +31,5 @@ git remote rename origin old-origin
 git remote add origin http://localhost:8080/root/petclinic.git
 git push -u origin --all
 ```
-Gitlabに既に作成済みのプロジェクトにファイルが格納されていることを確認してください。
-
-### ビルド方法
-(jar生成)
-```
-mvn clean package -DskipTests
-```
-(war生成)
-```
-mvn clean package -DskipTests -f ./pom_4war.xml
-```
-
-### 実行方法
-SpringBoot
-```
-java -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
-```
-次のURLでアクセス: http://localhost:8001/
-
-### Contrast付き実行方法
-```
-java -javaagent:/path/to/contrast.jar -Dcontrast.server.name=user05_svr -Dcontrast.agent.java.standalone_app_name=PetClinic_user05 -jar ./target/spring-petclinic-1.5.1.jar --server.port=8001
-```
+Gitlabに既に作成済みのプロジェクトにファイルが格納されていることを確認してください。  
+Push後、すぐにパイプラインが動きます。
