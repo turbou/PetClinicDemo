@@ -1,7 +1,12 @@
-## 脆弱性デモ用PetClinic
+# PetClinicをGitlabのPipelineで動かして、脆弱性検査もする手順
 
 ### 前提条件
-JDK8
+- 既にGitlab, Gitlab Runnerの環境は構築済みであること。
+- Gitlabにブランクのプロジェクトを作成しておいてください。
+
+### 準備
+このプロジェクトのリポジトリをそのままGitlabのブランクプロジェクトに切り替えます。
+
 
 ### ビルド方法
 (jar生成)
