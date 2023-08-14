@@ -25,7 +25,7 @@ Variablesに以下の変数と値を設定します。**環境に合わせて適
   GitlabDemo
 
 #### PetClinicDemoの配置
-このプロジェクトのリポジトリをそのままGitlabのブランクプロジェクトに切り替えます。
+このプロジェクトの参照先リモートリポジトリをそのままGitlabの作成済みブランクプロジェクトに切り替えます。
 ```bash
 git remote rename origin old-origin
 git remote add origin http://localhost:8080/XXXX/YYYYYYYY.git # これはGitlabに作ったプロジェクトのclone URLに合わせてください。
