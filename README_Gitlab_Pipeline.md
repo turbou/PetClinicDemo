@@ -28,7 +28,7 @@ Variablesに以下の変数と値を設定します。**環境に合わせて適
 このプロジェクトのリポジトリをそのままGitlabのブランクプロジェクトに切り替えます。
 ```bash
 git remote rename origin old-origin
-git remote add origin http://localhost:8080/root/petclinic.git
+git remote add origin http://localhost:8080/root/petclinic.git # これはGitlabに作ったプロジェクトのclone URLに合わせてください。
 git push -u origin --all
 ```
 Gitlabに既に作成済みのプロジェクトにファイルが格納されていることを確認してください。  
