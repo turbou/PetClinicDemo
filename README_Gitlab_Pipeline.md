@@ -7,7 +7,8 @@
 ### 準備
 #### GitlabプロジェクトへのCICD用環境変数の設定
 作成したプロジェクトの *Settings> CI/CD* を開きます。  
-Variablesに以下の変数と値を設定します。**環境に合わせて適宜変更してください。**
+Variablesに以下の変数と値を設定します。*環境に合わせて適宜変更してください。*  
+***Protect Variableのチェックボックスのチェックは外してください。***
 - AGENT_VERSION  
   5.2.2
 - CONTRAST_URL  
