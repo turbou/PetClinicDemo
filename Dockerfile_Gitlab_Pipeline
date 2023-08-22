@@ -1,0 +1,8 @@
+FROM ubuntu:20.04
+COPY ./selenium/requirements.txt requirements.txt 
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jdk telnet expect python3 openssl ca-certificates wget python3-distutils
+RUN wget https://bootstrap.pypa.io/pip/3.5/get-pip.py && \
+    python3 get-pip.py && \
+    pip --disable-pip-version-check install -r ./requirements.txt
+
