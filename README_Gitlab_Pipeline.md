@@ -25,6 +25,11 @@ Variablesに以下の変数と値を設定します。*環境に合わせて適�
 - SERVER_NAME  
   GitlabDemo
 
+#### PetClinic稼働用のDockerイメージビルド
+```bash
+docker build -t petclinic:1.0.0 -f Dockerfile_Gitlab_Pipeline .
+```
+
 #### PetClinicDemoの配置
 このプロジェクトの参照先リモートリポジトリをそのままGitlabの作成済みブランクプロジェクトに切り替えます。
 ```bash
