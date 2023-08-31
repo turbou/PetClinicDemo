@@ -23,7 +23,7 @@ agent-download:
       - "contrast-agent-$AGENT_VERSION.jar"
 
 petclinic-test:
-  image: ubuntu:20.04
+  image: petclinic:1.0.0
   stage: test
   services:
     - name: selenium/standalone-chrome:latest
@@ -31,17 +31,6 @@ petclinic-test:
   variables:
     FF_NETWORK_PER_BUILD: "true"
   script:
-    - apt-get update
-    - apt-get install -y openjdk-8-jdk
-    - apt-get install -y telnet
-    - apt-get install -y expect
-    - apt-get install -y python3
-    - apt-get install -y openssl ca-certificates
-    - apt-get install -y wget
-    - apt-get install -y python3-distutils
-    - wget https://bootstrap.pypa.io/pip/3.5/get-pip.py
-    - python3 get-pip.py
-    - pip --disable-pip-version-check install -r ./selenium/requirements.txt
     - ./startup_8001_gitlab_pipeline.sh $CI_PIPELINE_IID &
     - sleep 210
     - pytest ./selenium/test_sQLInjection.py
