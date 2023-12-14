@@ -30,6 +30,9 @@ petclinic-test:
       alias: selenium
   variables:
     FF_NETWORK_PER_BUILD: "true"
+    CONTRAST__CONTRAST__PROXY__URL: http://proxyhost.com
+    CONTRAST__CONTRAST__PROXY__USER: user
+    CONTRAST__CONTRAST__PROXY__PASS: password
   script:
     - ./startup_8001_gitlab_pipeline.sh $CI_PIPELINE_IID &
     - sleep 210
@@ -49,6 +52,8 @@ securityGate:
     BUILD_NUMBER: $CI_PIPELINE_IID
     FAIL_THRESHOLD: 0
     SEVERITIES: CRITICAL,HIGH
+    HTTP_PROXY: http://user:password@proxyhost.com
+    HTTPS_PROXY: http://user:password@proxyhost.com
   script:
     - /usr/bin/env python3 /verify.py
   allow_failure: true
