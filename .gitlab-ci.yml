@@ -18,6 +18,8 @@ mvn-build:
 agent-download:
   image: maven:3.8.6-jdk-8
   stage: agent
+  variables:
+    MAVEN_OPTS: "-Dhttp.proxyHost=proxyhost.com -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxyhost.com -Dhttps.proxyPort=3128"
   script:
     - mvn dependency:get -Dartifact=com.contrastsecurity:contrast-agent:$AGENT_VERSION -Ddest=./
   artifacts:
