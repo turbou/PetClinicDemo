@@ -30,6 +30,7 @@ petclinic-test:
       alias: selenium
   variables:
     FF_NETWORK_PER_BUILD: "true"
+    CONTRAST__CONTRAST__PROXY__ENABLE: "true"
     CONTRAST__CONTRAST__PROXY__URL: http://proxyhost.com
     CONTRAST__CONTRAST__PROXY__USER: user
     CONTRAST__CONTRAST__PROXY__PASS: password
