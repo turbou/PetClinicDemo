@@ -7,6 +7,8 @@ stages:
 mvn-build:
   image: maven:3.8.6-jdk-8
   stage: build
+  variables:
+    MAVEN_OPTS: "-Dhttp.proxyHost=proxyhost.com -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxyhost.com -Dhttps.proxyPort=3128"
   script:
     - mvn clean package -DskipTests
   artifacts:
@@ -31,7 +33,7 @@ petclinic-test:
   variables:
     FF_NETWORK_PER_BUILD: "true"
     CONTRAST__CONTRAST__PROXY__ENABLE: "true"
-    CONTRAST__CONTRAST__PROXY__URL: http://proxyhost.com
+    CONTRAST__CONTRAST__PROXY__URL: http://proxyhost.com:3128
     CONTRAST__CONTRAST__PROXY__USER: user
     CONTRAST__CONTRAST__PROXY__PASS: password
   script:
@@ -53,8 +55,8 @@ securityGate:
     BUILD_NUMBER: $CI_PIPELINE_IID
     FAIL_THRESHOLD: 0
     SEVERITIES: CRITICAL,HIGH
-    HTTP_PROXY: http://user:password@proxyhost.com
-    HTTPS_PROXY: http://user:password@proxyhost.com
+    HTTP_PROXY: http://user:password@proxyhost.com:3128
+    HTTPS_PROXY: http://user:password@proxyhost.com:3128
   script:
     - /usr/bin/env python3 /verify.py
   allow_failure: true
