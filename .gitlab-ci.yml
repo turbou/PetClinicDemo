@@ -7,9 +7,8 @@ stages:
 mvn-build:
   image: maven:3.8.6-jdk-8
   stage: build
-  variables:
-    MAVEN_OPTS: "-Dhttp.proxyHost=proxyhost.com -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxyhost.com -Dhttps.proxyPort=3128"
   script:
+    - sed -e "s/PROXY_HOST/172.31.0.237/g" -e "s/PROXY_PORT/63128/g" -e "s/PROXY_USER/$PROXY_USER/g" -e "s/PROXY_PASS/$PROXY_PASS/g" settings.xml_template > /usr/share/maven/conf/settings.xml
     - mvn clean package -DskipTests
   artifacts:
     paths:
@@ -18,9 +17,8 @@ mvn-build:
 agent-download:
   image: maven:3.8.6-jdk-8
   stage: agent
-  variables:
-    MAVEN_OPTS: "-Dhttp.proxyHost=proxyhost.com -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxyhost.com -Dhttps.proxyPort=3128"
   script:
+    - sed -e "s/PROXY_HOST/172.31.0.237/g" -e "s/PROXY_PORT/63128/g" -e "s/PROXY_USER/$PROXY_USER/g" -e "s/PROXY_PASS/$PROXY_PASS/g" settings.xml_template > /usr/share/maven/conf/settings.xml
     - mvn dependency:get -Dartifact=com.contrastsecurity:contrast-agent:$AGENT_VERSION -Ddest=./
   artifacts:
     paths:
@@ -35,9 +33,10 @@ petclinic-test:
   variables:
     FF_NETWORK_PER_BUILD: "true"
     CONTRAST__CONTRAST__PROXY__ENABLE: "true"
-    CONTRAST__CONTRAST__PROXY__URL: http://proxyhost.com:3128
-    #CONTRAST__CONTRAST__PROXY__USER: user
-    #CONTRAST__CONTRAST__PROXY__PASS: password
+    CONTRAST__CONTRAST__PROXY__URL: http://172.31.0.237:63128
+    CONTRAST__API__PROXY__AUTH_TYPE: basic
+    CONTRAST__CONTRAST__PROXY__USER: $PROXY_USER
+    CONTRAST__CONTRAST__PROXY__PASS: $PROXY_PASS
   script:
     - ./startup_8001_gitlab_pipeline.sh $CI_PIPELINE_IID &
     - sleep 210
@@ -57,8 +56,9 @@ securityGate:
     BUILD_NUMBER: $CI_PIPELINE_IID
     FAIL_THRESHOLD: 0
     SEVERITIES: CRITICAL,HIGH
-    HTTP_PROXY: http://proxyhost.com:3128
-    HTTPS_PROXY: http://proxyhost.com:3128
+    HTTP_PROXY: http://$PROXY_USER:$PROXY_PASS@172.31.0.237:63128
+    HTTPS_PROXY: http://$PROXY_USER:$PROXY_PASS@172.31.0.237:63128
+    NO_PROXY: 172.20.0.4
   script:
     - /usr/bin/env python3 /verify.py
   allow_failure: true
