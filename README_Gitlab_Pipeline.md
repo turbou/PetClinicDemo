@@ -25,6 +25,17 @@ Variablesに以下の変数と値を設定します。*環境に合わせて適�
 - SERVER_NAME  
   GitlabDemo
 
+#### プロキシへの対応について
+プロキシを経由させる場合は以下の対応を行ってください。  
+##### .gitlab-ci.ymlの修正
+プロキシに関する設定が各ステージでコメントアウトされているので、ホストとポートについては適切な値に変更のうえ  
+コメントを外して有効化してください。  
+認証プロキシでない場合は、PROXY_USER, PROXY_PASSのところはコメントアウトのまま、または除外してください。
+##### CICD変数の追加（認証プロキシの場合）
+- PROXY_USER  
+- PROXY_PASS
+必要に応じて「マスク」のチェックも入れてください。
+
 #### PetClinic稼働用のDockerイメージビルド
 ```bash
 docker build -t petclinic:1.0.0 -f Dockerfile_Gitlab_Pipeline .
