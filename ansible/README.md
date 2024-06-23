@@ -37,4 +37,11 @@ ansible-playbook sample.yml
 - 8001ポートでPetClinicが起動していることを確認
 - TeamServerでオンボード確認
 
+### 起動したPetClinicの停止方法
+```bash
+# jpsでPetClinicのプロセスIDを確認
+jps -v
+kill [プロセスID]
+```
+
 以上
