@@ -10,7 +10,7 @@
       shell: which java
       register: java_which
       failed_when: java_which.rc not in [0, 1]
-    - name: install openjdk-8 (CentOS)                   # インストールずみJavaが無ければインストール(CentOS)
+    - name: install openjdk-8 (CentOS)                   # インストールずみJavaが無ければインストール(CentOS) [rpm -qa | grep openjdk | xargs  yum -y remove]
       yum:
         name: java-1.8.0-openjdk-devel
         state: present
