@@ -1,15 +1,18 @@
 # AnsibleでPetClinicをJavaエージェント付きで起動するサンプル
-## 前提条件
+## 動作確認済み環境
 - CentOS7
-- ansible 2.9.27
+  - Python 3.6.8
+  - ansible 2.11.12
+- Ubuntu24
+  - Python 3.12.3
+  - ansible 2.17.1
 
 ## 初期セットアップ
 ### OSに対して
-- SELinuxをdisabledにする。
+- SELinuxをdisabledにする。(CentOS)
 
 ### 必要なものをインストール
-- yum install epel-release
-- yum install -y ansible
+venv, pipを使ってansibleをインストールしています。
 
 ### Contrastロールを取得
 ```bash
@@ -26,22 +29,47 @@ vim ./roles/contrast/tasks/main.yml
 ```
 `sudo: True`の行を削除してください。
 
+```
+-      headers: 'Accept:application/json,API-Key:{{ contrast_api_key }},Authorization:{{ contrast_authorization_key | b64encode }}'
++      headers: 
++        Accept: "application/json"
++        API-Key: "{{ contrast_api_key }}"
++        Authorization: "{{ contrast_authorization_key | b64encode }}"
+```
+get_urlの`headers`がdictじゃないと怒られます。
+
 ## Ansibleの実行
 ### エージェントの設定を定義する
-sample.ymlの中の21行目から29行目のContrastロール変数を環境にあわせて定義してください。
+linux.ymlの中の47行目から51行目のご使用の環境にあわせて定義してください。
 ### 実行する
+linux.ymlでCentOS, Ubuntuのどちらでも動くようにしています。
+処理の大まかな流れとしては以下のとおりです。  
+1. Javaのインストール確認（バージョンまではやっていません）
+2. Javaが入ってなければインストール（1.8）
+3. Contrastエージェントの存在とバージョン確認
+4. MavenのContrastエージェントの最新バージョンを取得
+5. Contrastエージェントが存在しない、またはバージョンが古い場合は最新のContrastエージェントを取得して配置
+   `/opt/contrast/contrast.jar`
+7. PetClinicのjarファイルを取得
+   現在は`/root/`ホーム直下です。変更する場合は`56, 73行目`を修正してください。
+9. PetClinicをContrastエージェント付きで起動
+
 ```bash
-ansible-playbook sample.yml
+ansible-playbook linux.yml
 ```
 ### 確認する
 - 8001ポートでPetClinicが起動していることを確認
 - TeamServerでオンボード確認
 
+CentOSでのfirewalld、Ubuntuでのufwのポートオープンに関するplaybookは以下、参考にしてください。  
+- CentOS  
+  firewalld.yml
+- Ubuntu  
+  ufw.yml
+
 ### 起動したPetClinicの停止方法
 ```bash
-# jpsでPetClinicのプロセスIDを確認
-jps -v
-kill [プロセスID]
+pkill -f spring-petclinic
 ```
 
 以上
