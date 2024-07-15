@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   connection: local
-  gather_facts: false
+  gather_facts: true
   tasks:
     - name: Check OS                                     # インストール済みJavaの確認（とりあえず存在チェックのみ）
       shell: cat /etc/os-release | grep '^ID=' | awk -F= '{print $2}' | sed s/\"//g
@@ -10,9 +10,16 @@
       shell: which java
       register: java_which
       failed_when: java_which.rc not in [0, 1]
-    - name: Install Java 1.8                             # インストールずみJavaが無ければインストール
-      yum: name=java-1.8.0-openjdk-devel state=present
-      when: java_which.rc == 1
+    - name: install openjdk-8 (CentOS)                   # インストールずみJavaが無ければインストール(CentOS)
+      yum:
+        name: java-1.8.0-openjdk-devel
+        state: present
+      when: java_which.rc == 1 and ansible_distribution in ['RedHat','CentOS']
+    - name: install openjdk-8 (Ubuntu)                   # インストールずみJavaが無ければインストール(Ubuntu) [apt remove openjdk-8*]
+      apt:
+        name: openjdk-8-jdk
+        state: present
+      when: java_which.rc == 1 and ansible_distribution in ['Ubuntu']
     - name: Check Current Contrast Agent                 # ダウンロード済みのContrastエージェントの存在確認
       stat:
         path: /opt/contrast/contrast.jar
@@ -55,8 +62,8 @@
       shell: >
         nohup java -javaagent:/opt/contrast/contrast.jar \
         -Dcontrast.server.environment=development \
-        -Dcontrast.server.name=ansible_"{{ os_name.stdout|upper }}" \
-        -Dcontrast.application.name=PetClinic_8001-"{{ os_name.stdout|upper }}" \
+        -Dcontrast.server.name=ansible_"{{ ansible_distribution }}{{ ansible_distribution_major_version }}" \
+        -Dcontrast.application.name=PetClinic_8001-"{{ ansible_distribution }}" \
         -Dcontrast.application.version=v8001 \
         -Dcontrast.agent.contrast_working_dir=contrast-8001/ \
         -Dcontrast.agent.logger.level=INFO \
