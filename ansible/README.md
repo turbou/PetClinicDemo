@@ -27,8 +27,10 @@ git clone https://github.com/Contrast-Security-OSS/ansible-role-contrast.git con
 ```bash
 vim ./roles/contrast/tasks/main.yml
 ```
-`sudo: True`の行を削除してください。
-
+修正箇所が**２つ**あります。
+1. `sudo: True`の行を削除してください。
+2. get_urlの`headers`が、**dict形式（連想配列形式）** じゃないと怒られます。  
+   具体的には以下の差分のように修正してください。
 ```
 -      headers: 'Accept:application/json,API-Key:{{ contrast_api_key }},Authorization:{{ contrast_authorization_key | b64encode }}'
 +      headers: 
@@ -36,7 +38,6 @@ vim ./roles/contrast/tasks/main.yml
 +        API-Key: "{{ contrast_api_key }}"
 +        Authorization: "{{ contrast_authorization_key | b64encode }}"
 ```
-get_urlの`headers`がdictじゃないと怒られます。
 
 ## Ansibleの実行
 ### エージェントの設定を定義する
