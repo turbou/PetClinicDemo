@@ -28,7 +28,7 @@ git clone https://github.com/Contrast-Security-OSS/ansible-role-contrast.git con
 vim ./roles/contrast/tasks/main.yml
 ```
 修正箇所が**２つ**あります。
-1. `sudo: True`の行を削除してください。
+1. `sudo: True`の行を削除してください。(2箇所あります)
 2. get_urlの`headers`が、**dict形式（連想配列形式）** じゃないと怒られます。  
    具体的には以下の差分のように修正してください。
 ```
