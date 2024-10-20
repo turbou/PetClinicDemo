@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Port Open 8001
+      firewalld:
+        port: 8001/tcp
+        zone: public
+        permanent: yes
+        state: enabled
+    - name: Restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+

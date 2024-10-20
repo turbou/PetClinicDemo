@@ -1,0 +1,79 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Check Current Java                           # インストール済みJavaの確認（とりあえず存在チェックのみ）
+      shell: which java
+      register: java_which
+      failed_when: java_which.rc not in [0, 1]
+    - name: install openjdk-8 (CentOS)                   # インストールずみJavaが無ければインストール(CentOS) [rpm -qa | grep openjdk | xargs  yum -y remove]
+      yum:
+        name: java-1.8.0-openjdk-devel
+        state: present
+      when: java_which.rc == 1 and ansible_distribution in ['RedHat','CentOS']
+    - name: install openjdk-8 (Ubuntu)                   # インストールずみJavaが無ければインストール(Ubuntu) [apt remove openjdk-8*]
+      apt:
+        name: openjdk-8-jdk
+        state: present
+      when: java_which.rc == 1 and ansible_distribution in ['Ubuntu']
+    - name: Check Current Contrast Agent                 # ダウンロード済みのContrastエージェントの存在確認
+      stat:
+        path: /opt/contrast/contrast.jar
+      register: exist_contrast_agent
+    - name: Confirm Agent Version                        # Contrastエージェントが存在する場合はVerも確認
+      shell: java -jar /opt/contrast/contrast.jar info | grep version | grep -Po '[\d.]+'
+      register: current_version
+      when: exist_contrast_agent.stat.exists
+    - name: Get Latest Agent Version                     # MavenからContrastエージェントの最新Verを取得（これもContrastエージェントが存在する場合）
+      ansible.builtin.uri:
+        url: https://search.maven.org/solrsearch/select?q=g:com.contrastsecurity+AND+a:contrast-agent&rows=20&wt=json
+        body_format: json
+        return_content: true
+      register: latest_contrast_agent_json
+      when: current_version is defined
+    - name: Compare Contrast Agent Version               # 一応、Contrastエージェントの現在Verと最新Verを出力
+      debug:
+        msg:
+          - "{% if current_version.stdout is defined %}Current Version is {{ current_version.stdout }}.{% else %}Current Version is not found.{% endif %}"
+          - "Latest Version(Maven info) is {{ latest_contrast_agent_json.json.response.docs[0].latestVersion }}."
+    - name: Download Contrast Agent                      # Contrastエージェントをダウンロード（エージェントが存在しない、またはVerが古い場合）
+      include_role:
+        name: contrast
+      vars:
+        contrast_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        contrast_service_key: YYYYYYYYYYYYYYYY
+        contrast_username: xxxxx@contrastsecurity.com
+        contrast_teamserver_url: https://eval.contrastsecurity.com
+        contrast_teamserver_organization: XXXXXXXX-XXXX-XXXX-XXXXXXXXXXXXXXXXX
+        contrast_agent_type: java?jvm=1_8
+        contrast_agent_path_group: root
+        contrast_agent_path_owner: root
+        contrast_agent_path: "/opt"
+      when: (not exist_contrast_agent.stat.exists) or (current_version.stdout is version(latest_contrast_agent_json.json.response.docs[0].latestVersion, '!='))
+    - name: Download Executable Jar
+      ansible.builtin.get_url:
+        dest: /root/spring-petclinic-1.5.1.jar
+        url: https://github.com/turbou/PetClinicDemo/releases/download/v1.5.1/spring-petclinic-1.5.1.jar
+    - name: Launch PetClinic With Java Agent(Background) # Contrastエージェント付きでPetClinicを起動
+      shell: >
+        nohup java -javaagent:/opt/contrast/contrast.jar \
+        -Dcontrast.server.environment=development \
+        -Dcontrast.server.name=ansible_"{{ ansible_distribution }}{{ ansible_distribution_major_version }}" \
+        -Dcontrast.application.name=PetClinic_8001-"{{ ansible_distribution }}" \
+        -Dcontrast.application.version=v8001 \
+        -Dcontrast.agent.contrast_working_dir=contrast-8001/ \
+        -Dcontrast.agent.logger.level=INFO \
+        -Dcontrast.agent.logger.path=./agent.log \
+        -Dcontrast.agent.polling.app_activity_ms=3000 \
+        -Dcontrast.agent.polling.server_activity_ms=3000 \
+        -Dcontrast.api.timeout_ms=10000 \
+        -Dcontrast.assess.enable=true \
+        -Dcontrast.protect.enable=true \
+        -jar /root/spring-petclinic-1.5.1.jar --server.port=8001 &
+    - name: How To Stop Application                      # アプリケーションの停止方法を出力
+      debug:
+        msg:
+          - "To stop the application, execute the following command:"
+          - "pkill -f spring-petclinic"
+

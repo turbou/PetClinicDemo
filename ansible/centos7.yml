@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Check Java
+      shell: which java
+      register: java_which
+      failed_when: java_which.rc not in [0, 1]
+    - name: Install Java 1.8
+      yum: name=java-1.8.0-openjdk-devel state=present
+      when: java_which.rc == 1
+    - name: Check Contrast Agent
+      stat:
+        path: /opt/contrast/contrast.jar
+      register: exist_contrast_agent
+    - name: Download Contrast Agent
+      include_role:
+        name: contrast
+      vars:
+        contrast_api_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        contrast_service_key: YYYYYYYYYYYYYYYY
+        contrast_username: xxxxx@contrastsecurity.com
+        contrast_teamserver_url: https://eval.contrastsecurity.com
+        contrast_teamserver_organization: XXXXXXXX-XXXX-XXXX-XXXXXXXXXXXXXXXXX
+        contrast_agent_type: java?jvm=1_8
+        contrast_agent_path_group: root
+        contrast_agent_path_owner: root
+        contrast_agent_path: "/opt"
+      when: not exist_contrast_agent.stat.exists
+    - name: Download Executable Jar
+      ansible.builtin.get_url:
+        dest: /root/spring-petclinic-1.5.1.jar
+        url: https://github.com/turbou/PetClinicDemo/releases/download/v1.5.1/spring-petclinic-1.5.1.jar
+    - name: Launch PetClinic With Java Agent(Background)
+      shell: >
+        nohup java -javaagent:/opt/contrast/contrast.jar \
+        -Dcontrast.server.environment=development \
+        -Dcontrast.server.name=CentOS7 \
+        -Dcontrast.application.name=PetClinic_8001-centos \
+        -Dcontrast.application.version=v8001 \
+        -Dcontrast.agent.contrast_working_dir=contrast-8001/ \
+        -Dcontrast.agent.logger.level=INFO \
+        -Dcontrast.agent.logger.path=./agent.log \
+        -Dcontrast.agent.polling.app_activity_ms=3000 \
+        -Dcontrast.agent.polling.server_activity_ms=3000 \
+        -Dcontrast.api.timeout_ms=10000 \
+        -Dcontrast.assess.enable=true \
+        -Dcontrast.protect.enable=true \
+        -jar /root/spring-petclinic-1.5.1.jar --server.port=8001 &
+
