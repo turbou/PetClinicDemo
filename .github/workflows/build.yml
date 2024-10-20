@@ -19,5 +19,5 @@ jobs:
       - name: Build with Maven
         id: build_with_maven
         run: |
-          mvn clean package -DskipTests
+          mvn clean package -B -DskipTests
 
