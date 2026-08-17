@@ -24,7 +24,7 @@ on:
     types:
       - closed
   schedule:
-     - cron: '0 0 * * *' # <-- Customer configured schedule
+    - cron: "0 0 * * *" # <-- Customer configured schedule
   workflow_dispatch: # Allows manual triggering
 
 permissions:
@@ -55,6 +55,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: "8"
+          distribution: "temurin"
+          cache: "maven"
+
       - name: Determine SmartFix Job Type
         id: determine_job_name
         shell: bash
@@ -72,11 +79,11 @@ jobs:
           # --- Max Open PRs ---
           max_open_prs: 5
           # --- Base Branch ---
-          base_branch: '${{ github.event.repository.default_branch }}'
+          base_branch: "${{ github.event.repository.default_branch }}"
           # --- Build Command ---
-          build_command: 'mvn clean test'
+          build_command: "mvn clean test"
           # --- Formatting Command ---
-          formatting_command: 'mvn spotless:apply'
+          formatting_command: "mvn spotless:apply"
           # --- Max QA Intervention loop attempts ---
           max_qa_attempts: 6
           # --- GitHub Token ---
@@ -88,7 +95,7 @@ jobs:
           contrast_authorization_key: ${{ secrets.CONTRAST_AUTHORIZATION_KEY }}
           contrast_api_key: ${{ secrets.CONTRAST_API_KEY }}
           # --- Use Contrast LLM as your default LLM provider
-          use_contrast_llm: 'true' # set to 'false' if using your own LLM
+          use_contrast_llm: "true" # set to 'false' if using your own LLM
           # --- Google Gemini API Credentials ---
           # gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           # --- Anthropic API Credentials ---
@@ -113,4 +120,3 @@ jobs:
           # SmartFix can inject your team's coding standards into the fix agent prompt.
           # use_smartfix_instructions: 'true'    # Read SMARTFIX_INSTRUCTIONS.md from the repo root on the base branch (default: true)
           # use_repo_agent_instructions: 'true'  # Fall back to .github/copilot-instructions.md, AGENTS.md, CLAUDE.md, or .cursorrules (default: true)
-
